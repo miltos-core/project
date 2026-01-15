@@ -1,0 +1,51 @@
+<?php
+session_start();
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== "student") {
+    header("Location: ../signIn.php");
+    exit();
+}
+
+$conn = new mysqli("localhost","root","","metropolitan_db");
+$user = $_SESSION['username'];
+
+/* Get student id */
+$res = $conn->query("SELECT id FROM Users WHERE username='$user'");
+$student_id = $res->fetch_assoc()['id'];
+
+/* Fetch student courses */
+$courses = $conn->query("
+    SELECT Courses.title, Users.username AS professor
+    FROM Enrollments
+    JOIN Courses ON Enrollments.course_id = Courses.id
+    JOIN Users ON Courses.professor_id = Users.id
+    WHERE Enrollments.student_id = $student_id
+");
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Courses</title>
+    <link rel="stylesheet" href="../../CSS/stylesMain.css">
+</head>
+<body>
+
+<h2>My Courses</h2>
+
+<table border="1">
+<tr>
+    <th>Course</th>
+    <th>Professor</th>
+</tr>
+
+<?php while($c = $courses->fetch_assoc()): ?>
+<tr>
+    <td><?= $c['title'] ?></td>
+    <td><?= $c['professor'] ?></td>
+</tr>
+<?php endwhile; ?>
+
+</table>
+
+</body>
+</html>

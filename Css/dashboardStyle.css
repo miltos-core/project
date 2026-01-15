@@ -1,0 +1,37 @@
+.dash-container {
+    width: 90%;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+}
+
+.dash-menu {
+    background: rgb(186, 62, 25);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    min-height: 400px;
+}
+
+.dash-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.1);
+}
+
+.dash-menu a:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+.dash-content {
+    background: rgb(121, 207, 207);
+    padding: 30px;
+    border-radius: 10px;
+    min-height: 400px;
+}
+

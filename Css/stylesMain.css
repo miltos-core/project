@@ -1,0 +1,217 @@
+/* Navigation bar that sticks to the top */
+.nav {
+    display: flex;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: rgb(186, 62, 25);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Keeps SignIn / SignUp links to the right of the NavBar*/
+.nav-right {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+}
+
+/* Default link style for navbar */
+.nav a {
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+}
+
+/* Logo size */
+#icon {
+    width: 80px;
+}
+
+/*Main campus image with overlay title */
+.hero {
+    position: relative;
+    width: 80%;
+    margin: 30px auto;
+}
+
+/* Main image styling */
+.img1 {
+    width: 100%;
+    height: auto;
+    max-height: 780px;
+    border-radius: 80px;
+    object-fit: cover;
+}
+
+/* Title text overlay on main image */
+.titleText {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    text-shadow: 2px 2px 5px black;
+}
+
+/* Campus information sections */
+.content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    width: 80%;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+/* Blue section for general campus info */
+.content.blue {
+    background-color: rgb(121, 207, 207);
+}
+
+/* Red section for collaborations / programs info */
+.content.red {
+    background-color: rgb(236, 137, 137);
+}
+
+/* Images inside content sections */
+.img2 {
+    width: 45%;
+    max-width: 500px;
+    border-radius: 10%;
+}
+
+/* Paragraphs inside content sections */
+.content p {
+    width: 55%;
+    font-size: 1.4rem;
+}
+
+/* Map placeholder styling */
+#map {
+    width: 80%;
+    height: 400px;
+    margin: 60px auto;
+    border-radius: 25px;
+    border-style: double;
+}
+
+
+/* Dashboard Styles */
+.dash-container {
+    width: 90%;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+}
+
+.dash-menu {
+    background: rgb(186, 62, 25);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    min-height: 400px;
+}
+
+.dash-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.1);
+}
+
+.dash-menu a:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+.dash-content {
+    background: rgb(121, 207, 207);
+    padding: 30px;
+    border-radius: 10px;
+    min-height: 400px;
+}
+
+
+@media (max-width: 800px) {
+    .dash-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Device Responsiveness for smaller screens */
+@media (max-width: 600px) {
+    .nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-right {
+        margin-left: 0;
+        gap: 10px;
+    }
+
+    .nav a {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    #icon {
+        width: 60px;
+    }
+    .hero {
+        width: 95%;
+        margin: 15px auto;
+    }
+
+    .img1 {
+        border-radius: 30px;
+        max-height: 350px;
+    }
+
+    .titleText {
+        font-size: 2rem;
+        padding: 10px;
+    }
+
+    .content {
+        flex-direction: column; 
+        text-align: center;
+    }
+
+    .img2 {
+        order: -1;
+        width: 90%;
+        margin-bottom: 15px
+    }
+
+    .content p {
+        width: 95%;
+        margin: 0 auto 20px auto;
+    }
+
+    #map {
+        width: 95%;
+        height: 300px;
+        margin: 30px auto;
+    }
+    .formDiv {
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .content {
+        gap: 20px;
+    }
+
+    .img2 {
+        border-radius: 15px;
+    }
+}
