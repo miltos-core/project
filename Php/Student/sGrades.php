@@ -30,7 +30,7 @@ $grades = $conn->query("
     <title>My Grades</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
-<body>
+<body class="user-page">
 
 <h2>My Grades</h2>
 

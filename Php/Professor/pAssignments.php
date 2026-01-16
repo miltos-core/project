@@ -39,7 +39,7 @@ $assignments = $conn->query("
 <head>
     <title>Post Assignments</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
-<body>
+<body class="user-page">
 
 <h2>Post New Assignment</h2>
 

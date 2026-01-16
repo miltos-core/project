@@ -28,7 +28,7 @@ $courses = $conn->query("
     <title>My Courses</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
-<body>
+<body class="user-page">
 
 <h2>My Courses</h2>
 

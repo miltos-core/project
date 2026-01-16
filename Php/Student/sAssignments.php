@@ -37,7 +37,7 @@ $result = $conn->query($sql);
 <head>
     <title>My Assignments</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
-<body>
+<body class="user-page">
 
 <h2>My Assignments</h2>
 

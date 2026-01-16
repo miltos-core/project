@@ -42,7 +42,7 @@ $subs = $conn->query("
     <title>Grading</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
-<body>
+<body class="user-page">
 
 <h2>Grade Students</h2>
 
