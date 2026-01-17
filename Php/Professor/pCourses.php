@@ -1,8 +1,8 @@
 <?php
 // Start session and check if user is logged in as professor
 session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== "professor") {
-    header("Location: ../signIn.php");
+if (!isset($_SESSION['username']) || $_SESSION['role_id'] != 2) {
+    echo "<script>alert('Forbidden action! You do not have permission to access this page.'); window.location.href='../signIn.php';</script>";
     exit();
 }
 
@@ -10,28 +10,38 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== "professor") {
 $conn = new mysqli("localhost","root","","metropolitan_db");
 $user = $_SESSION['username'];
 
-/* Get professor id */
+// Get professor id
 $res = $conn->query("SELECT id FROM Users WHERE username='$user'");
 $prof_id = $res->fetch_assoc()['id'];
 
-/* Create new course */
+// Create new course
 if (isset($_POST['new_course'])) {
     $title = $_POST['new_course'];
     $conn->query("INSERT INTO Courses (title, professor_id) VALUES ('$title', $prof_id)");
 }
 
-/* Enroll student */
+// Enroll student
 if (isset($_POST['student_id']) && isset($_POST['course_id'])) {
     $sid = $_POST['student_id'];
     $cid = $_POST['course_id'];
     $conn->query("INSERT IGNORE INTO Enrollments (student_id, course_id) VALUES ($sid, $cid)");
 }
 
-/* Fetch professor courses */
+// Delete course
+if (isset($_POST['delete_course'])) {
+    $cid = $_POST['delete_course'];
+    // First delete related enrollments and assignments
+    $conn->query("DELETE FROM Enrollments WHERE course_id = $cid");
+    $conn->query("DELETE FROM Assignments WHERE course_id = $cid");
+    // Then delete the course
+    $conn->query("DELETE FROM Courses WHERE id = $cid AND professor_id = $prof_id");
+}
+
+// Fetch professor courses
 $courses = $conn->query("SELECT * FROM Courses WHERE professor_id = $prof_id");
 
-/* Fetch all students */
-$students = $conn->query("SELECT id, username FROM Users WHERE role='student'");
+// Fetch all students
+$students = $conn->query("SELECT id, username FROM Users WHERE role_id=1");
 ?>
 
 <!DOCTYPE html>
@@ -56,11 +66,20 @@ $students = $conn->query("SELECT id, username FROM Users WHERE role='student'");
 
 <!-- Table displaying professor's courses -->
 <table border="1">
-<tr><th>ID</th><th>Course</th></tr>
-<?php while($c = $courses->fetch_assoc()): ?>
+<tr><th>ID</th><th>Course</th><th>Actions</th></tr>
+<?php 
+$courses->data_seek(0); // Reset result pointer
+while($c = $courses->fetch_assoc()): 
+?>
 <tr>
     <td><?= $c['id'] ?></td>
     <td><?= $c['title'] ?></td>
+    <td>
+        <form method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this course? This will also remove all enrollments and assignments for this course.')">
+            <input type="hidden" name="delete_course" value="<?= $c['id'] ?>">
+            <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer;">Delete</button>
+        </form>
+    </td>
 </tr>
 <?php endwhile; ?>
 </table>
@@ -81,8 +100,8 @@ $students = $conn->query("SELECT id, username FROM Users WHERE role='student'");
     <select name="course_id" required>
         <option value="">Select Course</option>
         <?php
-        $courses2 = $conn->query("SELECT * FROM Courses WHERE professor_id = $prof_id");
-        while($c = $courses2->fetch_assoc()):
+        $courses->data_seek(0); // Reset result pointer
+        while($c = $courses->fetch_assoc()):
         ?>
             <option value="<?= $c['id'] ?>"><?= $c['title'] ?></option>
         <?php endwhile; ?>

@@ -20,9 +20,11 @@ CN5006 Web Mobile App Development
 # Οδηγίες Εγκατάστασης
 
 1. Εγκαταστήστε το WAMP Server στον υπολογιστή σας.
-2. Αντιγράψτε τον φάκελο 'prototype' στον κατάλογο 'c:\wamp64\www\'.
+2. Αντιγράψτε τον φάκελο 'prototype' στον κατάλογο 'c:\wamp64\www'.
 3. Ξεκινήστε το WAMP Server.
 4. Τρέξτε την συντόμευση 'runSetup.url'.
-*Εναλλακτικά:
-4. Κάντε import στην βάση δεδομένων σας 'http://localhost/phpmyadmin' το αρχειο database.sql απο τον φάκελο 'prototype'.
-6. Ανοίξτε τον περιηγητή και πηγαίνετε στο 'http://localhost/prototype/index.php'.
+
+**Εναλλακτικά:**
+
+4. Κάντε import στην βάση δεδομένων σας στο 'http://localhost/phpmyadmin' το αρχείο 'database.sql' από τον φάκελο 'prototype'.
+5. Ανοίξτε τον περιηγητή και πηγαίνετε στο 'http://localhost/prototype/index.php'.

@@ -1,8 +1,8 @@
 <?php
 // Start session and check if user is logged in as professor
 session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== "professor") {
-    header("Location: ../signIn.php");
+if (!isset($_SESSION['username']) || $_SESSION['role_id'] != 2) {
+    echo "<script>alert('Forbidden action! You do not have permission to access this page.'); window.location.href='../signIn.php';</script>";
     exit();
 }
 
@@ -17,18 +17,19 @@ $prof_id = $res->fetch_assoc()['id'];
 /* Save grade */
 if(isset($_POST['submission_id'])){
     $grade = $_POST['grade'];
+    $feedback = $_POST['feedback'];
     $sid = $_POST['submission_id'];
 
     $conn->query("
-    INSERT INTO Grades (submission_id, grade)
-    VALUES ($sid, '$grade')
-    ON DUPLICATE KEY UPDATE grade='$grade'
+    INSERT INTO Grades (submission_id, grade, feedback)
+    VALUES ($sid, '$grade', '$feedback')
+    ON DUPLICATE KEY UPDATE grade='$grade', feedback='$feedback'
     ");
 }
 
 /* Get submissions for professor's courses */
 $subs = $conn->query("
-    SELECT s.id, u.username, a.title AS assignment, c.title AS course, g.grade
+    SELECT s.id, u.username, a.title AS assignment, c.title AS course, g.grade, g.feedback
     FROM Submissions s
     JOIN Users u ON s.student_id = u.id
     JOIN Assignments a ON s.assignment_id = a.id
@@ -57,6 +58,7 @@ $subs = $conn->query("
     <th>Course</th>
     <th>Assignment</th>
     <th>Grade</th>
+    <th>Feedback</th>
     <th>Save</th>
 </tr>
 
@@ -69,6 +71,9 @@ $subs = $conn->query("
     <td>
         <input type="text" name="grade" value="<?= $s['grade'] ?>">
         <input type="hidden" name="submission_id" value="<?= $s['id'] ?>">
+    </td>
+    <td>
+        <textarea name="feedback" rows="3" cols="30"><?= $s['feedback'] ?></textarea>
     </td>
     <td><button>Save</button></td>
 </form>

@@ -5,7 +5,12 @@ $display_name = "";
 
 // Checks if the user Is signed in and puts his name in a variable to use later on line 30
 if(isset($_SESSION['username'])) {
-    $display_name = "Welcome, " . $_SESSION['username'] . " (" . $_SESSION['role'] . ")";
+    if ($_SESSION['role_id'] == 1) {
+        $role_name = 'Student';
+    } else {
+        $role_name = 'Professor';
+    }
+    $display_name = "Welcome, " . $_SESSION['username'] . " (" . $role_name . ")";
 }
 ?>
 
@@ -17,7 +22,7 @@ if(isset($_SESSION['username'])) {
     
     <meta charset="UTF-8" />
     <title>Μητροπολιτικό Κολλέγιο Ρόδου</title>
-    <link rel="stylesheet" href="/prototype/CSS/stylesMain.css">
+    <link rel="stylesheet" href="CSS/stylesMain.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -26,7 +31,7 @@ if(isset($_SESSION['username'])) {
 
     <div class="nav">
         <a href="index.php">
-            <img src="IMAGES/Icon.png" id="icon">
+            <img src="Images/Icon.png" id="icon">
         </a>
         <div class="nav-right">
 

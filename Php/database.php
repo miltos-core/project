@@ -23,17 +23,17 @@ CREATE TABLE IF NOT EXISTS Users (
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) NOT NULL
+    role_id INT NOT NULL
 )");
 
 /* Adding demo Users */
 $conn->query("
-INSERT IGNORE INTO Users (id, username, email, password, role) VALUES
-(1,'nikolaos_s','nikos@student.edu.gr','1234','student'),
-(2,'maria_p','maria@student.edu.gr','student142','student'),
-(3,'konstadinos_k','kostas@student.edu.gr','stu1234','student'),
-(4,'prof_georgos','geo@edu.gr','profes123','professor'),
-(5,'prof_annastasia','anna@edu.gr','anna2002','professor')
+INSERT IGNORE INTO Users (id, username, email, password, role_id) VALUES
+(1,'nikolaos_s','nikos@student.edu.gr','1234',1),
+(2,'maria_p','maria@student.edu.gr','pass123',1),
+(3,'konstadinos_k','kostas@student.edu.gr','student2025',1),
+(4,'prof_georgos','geo@edu.gr','prof123',2),
+(5,'prof_annastasia','anna@edu.gr','anna2025',2)
 ");
 
 /* Creating Courses table*/
@@ -58,10 +58,11 @@ INSERT IGNORE INTO Courses (id, title, description, professor_id) VALUES
 $conn->query("
 CREATE TABLE IF NOT EXISTS Enrollments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT UNIQUE,
-    course_id INT UNIQUE,
+    student_id INT,
+    course_id INT,
     FOREIGN KEY (student_id) REFERENCES Users(id),
-    FOREIGN KEY (course_id) REFERENCES Courses(id)
+    FOREIGN KEY (course_id) REFERENCES Courses(id),
+    UNIQUE(student_id, course_id)
 )");
 
 /* Adding Enrollments */
@@ -103,13 +104,7 @@ CREATE TABLE IF NOT EXISTS Submissions (
     FOREIGN KEY (student_id) REFERENCES Users(id)
 )");
 
-/* Adding Submissions */
-$conn->query("
-INSERT IGNORE INTO Submissions (assignment_id, student_id, file_name) VALUES
-(1,1,'nikos-html.zip'),
-(2,1,'nikos-er.pdf'),
-(1,2,'maria-website.zip')
-");
+/* No demo submissions for testing uploads */
 
 /* Creating Grades table */
 $conn->query("
@@ -121,13 +116,8 @@ CREATE TABLE IF NOT EXISTS Grades (
     FOREIGN KEY (submission_id) REFERENCES Submissions(id)
 )");
 
-/* Adding Grades */
-$conn->query("
-INSERT IGNORE INTO Grades (submission_id, grade, feedback) VALUES
-(1,'8.5','Very good'),
-(2,'9','Excellent work'),
-(3,'7','Needs better styling')
-");
+/* No demo grades for testing */
+
 
 $msg = "System database and demo data ready!";
 $conn->close();

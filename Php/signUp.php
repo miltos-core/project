@@ -14,6 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = test_input($_POST['password']);
     $role = test_input($_POST['type']);
     $code = test_input($_POST['code']);
+    if ($role == "student") {
+        $role_id = 1;
+    } else {
+        $role_id = 2;
+    }
     
     $can_register = false;
 
@@ -33,27 +38,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
         }
         // Check if email and username already exist
-        $check_stmt = $conn->prepare("SELECT * FROM Users WHERE username=? OR email=?");
-        $check_stmt->bind_param("ss", $user, $email);
-        $check_stmt->execute();
-        $check = $check_stmt->get_result();
+        $check = $conn->query("SELECT * FROM Users WHERE username='$user' OR email='$email'");
 
         if ($check->num_rows > 0) {
             echo "<script>alert('Username or Email already taken!'); window.history.back();</script>";
         } else {
             // insert new user into database
-            $insert_stmt = $conn->prepare("INSERT INTO Users (username, email, password, role) VALUES (?, ?, ?, ?)");
-            $insert_stmt->bind_param("ssss", $user, $email, $pass, $role);
+            $sql = "INSERT INTO Users (username, email, password, role_id) VALUES ('$user', '$email', '$pass', $role_id)";
             
-            if ($insert_stmt->execute()) {
+            if ($conn->query($sql) === TRUE) {
             // Success message using js window popup and redirect to sign in
             echo "<script>alert('Account created successfully for $user!'); window.location.href='signIn.php';</script>";
             } else {
             echo "Error: " . $conn->error;
             }
         }
-        $check_stmt->close();
-        $insert_stmt->close();
         $conn->close();
     } else {
         // Wrong registration code alert
@@ -70,12 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <meta charset="UTF-8">
     <title>Μητροπολιτικό Κολλέγιο Ρόδου - Sign Up</title>
-    <link rel="stylesheet" href="/prototype/CSS/styles2.css">
+    <link rel="stylesheet" href="../CSS/styles2.css">
 </head>
 <body>
 
     <div class="nav">
-        <a href="../index.php"><img src="/prototype/Images/Icon.png" id="icon" alt="Logo"></a>
+        <a href="../index.php"><img src="../Images/Icon.png" id="icon" alt="Logo"></a>
         <div class="nav-right">
             <a href="signIn.php">Sign In</a>
         </div>

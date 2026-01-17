@@ -8,7 +8,13 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
-$role = $_SESSION['role']; // "student" or "professor"
+$role_id = $_SESSION['role_id'];
+
+if ($role_id == 1) {
+    $role_name = 'Student';
+} else {
+    $role_name = 'Professor';
+}
 ?>
 <!DOCTYPE html>
 <html lang="el">
@@ -22,7 +28,7 @@ $role = $_SESSION['role']; // "student" or "professor"
 <div class="nav">
     <a href="index.php"><img src="Images/Icon.png" id="icon"></a>
     <div class="nav-right">
-        <a><?php echo $username . " (" . $role . ")"; ?></a>
+        <a><?php echo $username . " (" . $role_name . ")"; ?></a>
         <a href="php/logout.php">Logout</a>
     </div>
 </div>
@@ -33,13 +39,13 @@ $role = $_SESSION['role']; // "student" or "professor"
     <div class="dash-menu">
         <h3>Dashboard</h3>
 
-        <?php if ($role === "student"): ?>
+        <?php if ($role_id == 1): ?>
             <a href="php/student/sCourses.php">My Courses</a>
             <a href="php/student/sAssignments.php">My Assignments</a>
             <a href="php/student/sGrades.php">My Grades</a>
         <?php endif; ?>
 
-        <?php if ($role === "professor"): ?>
+        <?php if ($role_id == 2): ?>
             <a href="php/professor/pCourses.php">Manage Courses</a>
             <a href="php/professor/pAssignments.php">Post Assignments</a>
             <a href="php/professor/pGrading.php">Grade Students</a>
@@ -51,12 +57,12 @@ $role = $_SESSION['role']; // "student" or "professor"
     <div class="dash-content">
         <h2>Welcome <?php echo $username; ?></h2>
 
-        <?php if ($role === "student"): ?>
+        <?php if ($role_id == 1): ?>
             <p>You are logged in as a <strong>Student</strong>.  
             From here you can view your courses, submit assignments and check your grades.</p>
         <?php endif; ?>
 
-        <?php if ($role === "professor"): ?>
+        <?php if ($role_id == 2): ?>
             <p>You are logged in as a <strong>Professor</strong>.  
             From here you can manage courses, upload assignments and grade students.</p>
         <?php endif; ?>

@@ -1,8 +1,8 @@
 <?php
 // Start session and check if user is logged in as student
 session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== "student") {
-    header("Location: ../signIn.php");
+if (!isset($_SESSION['username']) || $_SESSION['role_id'] != 1) {
+    echo "<script>alert('Forbidden action! You do not have permission to access this page.'); window.location.href='../signIn.php';</script>";
     exit();
 }
 

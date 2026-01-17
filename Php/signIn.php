@@ -25,10 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = test_input($_POST['password']);
 
     // Searching to find a user with matching email and password
-    $stmt = $conn->prepare("SELECT id, username, role FROM Users WHERE email = ? AND password = ?");
-    $stmt->bind_param("ss", $email, $pass);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $sql = "SELECT id, username, role_id FROM Users WHERE email = '$email' AND password = '$pass'";
+    $result = $conn->query($sql);
 
     // If a matching user is found
     if ($result->num_rows > 0) {
@@ -37,17 +35,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Store user information in session
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['username'] = $row['username'];
-        $_SESSION['role'] = $row['role'];
+        $_SESSION['role_id'] = $row['role_id'];
+        
+        if ($row['role_id'] == 1) {
+            $role_name = 'Student';
+        } else {
+            $role_name = 'Professor';
+        }
         
         echo "<script>
-                alert('Success! Welcome back, " . $row['username'] . " (" . $row['role'] . ")');
+                alert('Success! Welcome back, " . $row['username'] . " (" . $role_name . ")');
                 window.location.href='../index.php';
               </script>";
     } else {
         // Alert if email or password are incorrect
         echo "<script>alert('Invalid Username or Password. Please try again.');</script>";
     }
-    $stmt->close();
     $conn->close();
 }
 ?>
