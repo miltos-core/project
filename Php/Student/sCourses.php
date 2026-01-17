@@ -1,10 +1,12 @@
 <?php
+// Start session and check if user is logged in as student
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== "student") {
     header("Location: ../signIn.php");
     exit();
 }
 
+// Connect to database
 $conn = new mysqli("localhost","root","","metropolitan_db");
 $user = $_SESSION['username'];
 
@@ -29,9 +31,12 @@ $courses = $conn->query("
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
+<div class="container">
 
 <h2>My Courses</h2>
+<a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
+<!-- Table displaying student's enrolled courses -->
 <table border="1">
 <tr>
     <th>Course</th>
@@ -47,5 +52,6 @@ $courses = $conn->query("
 
 </table>
 
+</div>
 </body>
 </html>

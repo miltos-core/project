@@ -299,3 +299,24 @@
     background-color: #ddd;
     margin: 30px 0;
 }
+
+.user-page .back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ba3e19;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.user-page .back-button:hover {
+    background-color: #a03215;
+}
+
+.user-page .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}

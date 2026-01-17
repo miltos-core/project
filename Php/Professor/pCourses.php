@@ -1,10 +1,12 @@
 <?php
+// Start session and check if user is logged in as professor
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== "professor") {
     header("Location: ../signIn.php");
     exit();
 }
 
+// Connect to database
 $conn = new mysqli("localhost","root","","metropolitan_db");
 $user = $_SESSION['username'];
 
@@ -39,9 +41,12 @@ $students = $conn->query("SELECT id, username FROM Users WHERE role='student'");
 <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
+<div class="container">
 
 <h2>My Courses</h2>
+<a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
+<!-- Form to create new course -->
 <form method="post">
     <input type="text" name="new_course" placeholder="New course title" required>
     <button type="submit">Create Course</button>
@@ -49,6 +54,7 @@ $students = $conn->query("SELECT id, username FROM Users WHERE role='student'");
 
 <br>
 
+<!-- Table displaying professor's courses -->
 <table border="1">
 <tr><th>ID</th><th>Course</th></tr>
 <?php while($c = $courses->fetch_assoc()): ?>
@@ -63,6 +69,7 @@ $students = $conn->query("SELECT id, username FROM Users WHERE role='student'");
 
 <h3>Enroll Student</h3>
 
+<!-- Form to enroll students in courses -->
 <form method="post">
     <select name="student_id" required>
         <option value="">Select Student</option>
@@ -84,5 +91,6 @@ $students = $conn->query("SELECT id, username FROM Users WHERE role='student'");
     <button type="submit">Enroll</button>
 </form>
 
+</div>
 </body>
 </html>

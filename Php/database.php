@@ -29,11 +29,11 @@ CREATE TABLE IF NOT EXISTS Users (
 /* Adding demo Users */
 $conn->query("
 INSERT IGNORE INTO Users (id, username, email, password, role) VALUES
-(1,'nikos_s','nikos@student.mc.gr','1234','student'),
-(2,'maria_p','maria@student.mc.gr','pass123','student'),
-(3,'kostas_k','kostas@student.mc.gr','student2025','student'),
-(4,'prof_geo','geo@mc.gr','prof123','professor'),
-(5,'prof_anna','anna@mc.gr','anna2025','professor')
+(1,'nikolaos_s','nikos@student.edu.gr','1234','student'),
+(2,'maria_p','maria@student.edu.gr','student142','student'),
+(3,'konstadinos_k','kostas@student.edu.gr','stu1234','student'),
+(4,'prof_georgos','geo@edu.gr','profes123','professor'),
+(5,'prof_annastasia','anna@edu.gr','anna2002','professor')
 ");
 
 /* Creating Courses table*/
@@ -49,9 +49,9 @@ CREATE TABLE IF NOT EXISTS Courses (
 /* Adding Courses */
 $conn->query("
 INSERT IGNORE INTO Courses (id, title, description, professor_id) VALUES
-(1,'Web Development','HTML, CSS, PHP basics',4),
+(1,'Web Development #1','HTML, CSS, Js, PHP basics',4),
 (2,'Databases','MySQL and data modeling',4),
-(3,'Programming','C#, algorithms',5)
+(3,'Programming Language C++','C++, algorithms',5)
 ");
 
 /* Creating Enrollments table */
@@ -86,9 +86,9 @@ CREATE TABLE IF NOT EXISTS Assignments (
 /* Adding Assignments */
 $conn->query("
 INSERT IGNORE INTO Assignments (id, course_id, title, description, due_date) VALUES
-(1,1,'HTML Website','Create a simple HTML website','2026-02-10'),
+(1,1,'HTML Website','Create a HTML website','2026-02-10'),
 (2,2,'ER Diagram','Design a database ER diagram','2026-02-15'),
-(3,3,'C# Program','Create a console application','2026-02-20')
+(3,3,'C++ Project','Create a Hello World project','2026-02-20')
 ");
 
 /* Creating Submissions table */
@@ -106,9 +106,9 @@ CREATE TABLE IF NOT EXISTS Submissions (
 /* Adding Submissions */
 $conn->query("
 INSERT IGNORE INTO Submissions (assignment_id, student_id, file_name) VALUES
-(1,1,'nikos_html.zip'),
-(2,1,'nikos_er.pdf'),
-(1,2,'maria_site.zip')
+(1,1,'nikos-html.zip'),
+(2,1,'nikos-er.pdf'),
+(1,2,'maria-website.zip')
 ");
 
 /* Creating Grades table */

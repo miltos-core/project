@@ -1,10 +1,12 @@
 <?php
+// Start session and check if user is logged in as professor
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== "professor") {
     header("Location: ../signIn.php");
     exit();
 }
 
+// Connect to database
 $conn = new mysqli("localhost","root","","metropolitan_db");
 $prof = $_SESSION['username'];
 
@@ -43,9 +45,12 @@ $subs = $conn->query("
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
+<div class="container">
 
 <h2>Grade Students</h2>
+<a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
+<!-- Table for grading student submissions -->
 <table border="1">
 <tr>
     <th>Student</th>
@@ -72,5 +77,6 @@ $subs = $conn->query("
 
 </table>
 
+</div>
 </body>
 </html>

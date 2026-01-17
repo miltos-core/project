@@ -1,16 +1,31 @@
 <?php
+// Start session and check if user is logged in as student
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== "student") {
     header("Location: ../signIn.php");
     exit();
 }
 
+// Connect to database
 $conn = new mysqli("localhost","root","","metropolitan_db");
 $student = $_SESSION['username'];
 
 /* Get student ID */
 $res = $conn->query("SELECT id FROM Users WHERE username='$student'");
 $student_id = $res->fetch_assoc()['id'];
+
+/* Handle file upload */
+if(isset($_POST['upload'])){
+    $assignment_id = $_POST['assignment_id'];
+    $file = $_FILES['file'];
+    $file_name = basename($file['name']);
+    $target = "../../SubmitedAssignments/" . $file_name;
+    if(move_uploaded_file($file['tmp_name'], $target)){
+        $conn->query("INSERT INTO Submissions (assignment_id, student_id, file_name) VALUES ($assignment_id, $student_id, '$file_name')");
+    } else {
+        echo "Upload failed.";
+    }
+}
 
 /* Get assignments for enrolled courses */
 $sql = "
@@ -38,9 +53,12 @@ $result = $conn->query($sql);
     <title>My Assignments</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 <body class="user-page">
+<div class="container">
 
 <h2>My Assignments</h2>
+<a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
+<!-- Table displaying student's assignments with upload option -->
 <table>
 <tr>
     <th>Course</th>
@@ -59,7 +77,12 @@ $result = $conn->query($sql);
         <?php if($row['file_name']): ?>
             Submitted (<?= $row['file_name'] ?>)
         <?php else: ?>
-            Not submitted
+            <!-- Upload form for unsubmitted assignments -->
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" name="assignment_id" value="<?= $row['id'] ?>">
+                <input type="file" name="file" required>
+                <button type="submit" name="upload">Upload</button>
+            </form>
         <?php endif; ?>
     </td>
 </tr>
@@ -67,5 +90,6 @@ $result = $conn->query($sql);
 
 </table>
 
+</div>
 </body>
 </html>
