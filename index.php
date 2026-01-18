@@ -3,7 +3,7 @@
 session_start();
 $display_name = "";
 
-// Checks if the user Is signed in and puts his name in a variable to use later on line 30
+// Checks if the user Is signed in and puts his name and role in a variable to use later on line 30
 if(isset($_SESSION['username'])) {
     if ($_SESSION['role_id'] == 1) {
         $role_name = 'Student';

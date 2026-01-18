@@ -1,18 +1,13 @@
 <?php
-// Start session and check if user is logged in as student
-session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role_id'] != 1) {
-    echo "<script>alert('Forbidden action! You do not have permission to access this page.'); window.location.href='../signIn.php';</script>";
-    exit();
-}
+include '../includes/auth.php';
+include '../includes/db.php';
+checkStudentAccess();
 
 // Connect to database
-$conn = new mysqli("localhost","root","","metropolitan_db");
+$conn = getConnection();
 $user = $_SESSION['username'];
 
-/* Get student ID */
-$res = $conn->query("SELECT id FROM Users WHERE username='$user'");
-$student_id = $res->fetch_assoc()['id'];
+$student_id = getUserId($user);
 
 /* Fetch grades */
 $grades = $conn->query("
@@ -24,18 +19,19 @@ $grades = $conn->query("
     WHERE s.student_id = $student_id
 ");
 
+$pageTitle = "My Grades";
+$heading = "My Grades";
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Grades</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-
-<h2>My Grades</h2>
+<h2><?php echo $heading; ?></h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Table displaying student's grades -->
@@ -46,12 +42,12 @@ $grades = $conn->query("
     <th>Grade</th>
 </tr>
 
-<?php while($g = $grades->fetch_assoc()): ?>
-<tr>
-    <td><?= $g['course'] ?></td>
-    <td><?= $g['assignment'] ?></td>
-    <td><?= $g['grade'] ?></td>
-</tr>
+<?php while ($g = $grades->fetch_assoc()): ?>
+    <tr>
+        <td><?php echo $g['course']; ?></td>
+        <td><?php echo $g['assignment']; ?></td>
+        <td><?php echo $g['grade']; ?></td>
+    </tr>
 <?php endwhile; ?>
 
 </table>

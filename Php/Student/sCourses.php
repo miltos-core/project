@@ -1,18 +1,13 @@
 <?php
-// Start session and check if user is logged in as student
-session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role_id'] != 1) {
-    echo "<script>alert('Forbidden action! You do not have permission to access this page.'); window.location.href='../signIn.php';</script>";
-    exit();
-}
+include '../includes/auth.php';
+include '../includes/db.php';
+checkStudentAccess();
 
 // Connect to database
-$conn = new mysqli("localhost","root","","metropolitan_db");
+$conn = getConnection();
 $user = $_SESSION['username'];
 
-/* Get student id */
-$res = $conn->query("SELECT id FROM Users WHERE username='$user'");
-$student_id = $res->fetch_assoc()['id'];
+$student_id = getUserId($user);
 
 /* Fetch student courses */
 $courses = $conn->query("
@@ -24,16 +19,19 @@ $courses = $conn->query("
 ");
 ?>
 
+$pageTitle = "My Courses";
+$heading = "My Courses";
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Courses</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-
-<h2>My Courses</h2>
+<h2><?php echo $heading; ?></h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Table displaying student's enrolled courses -->
@@ -43,11 +41,11 @@ $courses = $conn->query("
     <th>Professor</th>
 </tr>
 
-<?php while($c = $courses->fetch_assoc()): ?>
-<tr>
-    <td><?= $c['title'] ?></td>
-    <td><?= $c['professor'] ?></td>
-</tr>
+<?php while ($c = $courses->fetch_assoc()): ?>
+    <tr>
+        <td><?php echo $c['title']; ?></td>
+        <td><?php echo $c['professor']; ?></td>
+    </tr>
 <?php endwhile; ?>
 
 </table>

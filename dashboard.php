@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-/* Block guests */
+// Block guests
 if (!isset($_SESSION['username'])) {
     header("Location: php/signIn.php");
     exit();
@@ -35,7 +35,7 @@ if ($role_id == 1) {
 
 <div class="dash-container">
 
-    <!-- LEFT MENU -->
+    <!-- Left Menu-->
     <div class="dash-menu">
         <h3>Dashboard</h3>
 
@@ -53,7 +53,7 @@ if ($role_id == 1) {
 
     </div>
 
-    <!-- MAIN AREA -->
+    <!-- Main Area -->
     <div class="dash-content">
         <h2>Welcome <?php echo $username; ?></h2>
 

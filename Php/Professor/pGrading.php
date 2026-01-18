@@ -1,30 +1,30 @@
 <?php
-// Start session and check if user is logged in as professor
-session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role_id'] != 2) {
-    echo "<script>alert('Forbidden action! You do not have permission to access this page.'); window.location.href='../signIn.php';</script>";
-    exit();
-}
+include '../includes/auth.php';
+include '../includes/db.php';
+checkProfessorAccess();
 
 // Connect to database
-$conn = new mysqli("localhost","root","","metropolitan_db");
+$conn = getConnection();
 $prof = $_SESSION['username'];
 
-/* Professor ID */
-$res = $conn->query("SELECT id FROM Users WHERE username='$prof'");
-$prof_id = $res->fetch_assoc()['id'];
+$prof_id = getUserId($prof);
 
-/* Save grade */
-if(isset($_POST['submission_id'])){
-    $grade = $_POST['grade'];
-    $feedback = $_POST['feedback'];
-    $sid = $_POST['submission_id'];
-
-    $conn->query("
-    INSERT INTO Grades (submission_id, grade, feedback)
-    VALUES ($sid, '$grade', '$feedback')
-    ON DUPLICATE KEY UPDATE grade='$grade', feedback='$feedback'
-    ");
+/* Save grades */
+if (isset($_POST['save_all'])) {
+    foreach ($_POST['grade'] as $sid => $grade) {
+        if (isset($_POST['feedback'][$sid])) {
+            $feedback = $_POST['feedback'][$sid];
+        } else {
+            $feedback = '';
+        }
+        $conn->query("
+            INSERT INTO Grades (submission_id, grade, feedback)
+            VALUES ($sid, '$grade', '$feedback')
+            ON DUPLICATE KEY UPDATE
+                grade = '$grade',
+                feedback = '$feedback'
+        ");
+    }
 }
 
 /* Get submissions for professor's courses */
@@ -39,19 +39,23 @@ $subs = $conn->query("
 ");
 ?>
 
+$pageTitle = "Grading";
+$heading = "Grade Students";
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Grading</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-
-<h2>Grade Students</h2>
+<h2><?php echo $heading; ?></h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Table for grading student submissions -->
+<form method="post">
 <table border="1">
 <tr>
     <th>Student</th>
@@ -59,28 +63,25 @@ $subs = $conn->query("
     <th>Assignment</th>
     <th>Grade</th>
     <th>Feedback</th>
-    <th>Save</th>
 </tr>
 
-<?php while($s = $subs->fetch_assoc()): ?>
-<tr>
-<form method="post">
-    <td><?= $s['username'] ?></td>
-    <td><?= $s['course'] ?></td>
-    <td><?= $s['assignment'] ?></td>
-    <td>
-        <input type="text" name="grade" value="<?= $s['grade'] ?>">
-        <input type="hidden" name="submission_id" value="<?= $s['id'] ?>">
-    </td>
-    <td>
-        <textarea name="feedback" rows="3" cols="30"><?= $s['feedback'] ?></textarea>
-    </td>
-    <td><button>Save</button></td>
-</form>
-</tr>
+<?php while ($s = $subs->fetch_assoc()): ?>
+    <tr>
+        <td><?php echo $s['username']; ?></td>
+        <td><?php echo $s['course']; ?></td>
+        <td><?php echo $s['assignment']; ?></td>
+        <td>
+            <input type="text" name="grade[<?php echo $s['id']; ?>]" value="<?php echo $s['grade']; ?>">
+        </td>
+        <td>
+            <textarea name="feedback[<?php echo $s['id']; ?>]" rows="3" cols="30"><?php echo $s['feedback']; ?></textarea>
+        </td>
+    </tr>
 <?php endwhile; ?>
 
 </table>
+<button type="submit" name="save_all">Save All Grades</button>
+</form>
 
 </div>
 </body>

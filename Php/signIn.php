@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <!-- Ensures proper layout scaling on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta charset="UTF-8" />
     <title>Μητροπολιτικό Κολλέγιο Ρόδου - Sign In</title>
     <link rel="stylesheet" href="../CSS/styles2.css">

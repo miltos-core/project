@@ -1,3 +1,4 @@
+/* NAVIGATION */
 /* Navigation bar that sticks to the top */
 .nav {
     display: flex;
@@ -28,6 +29,7 @@
     width: 80px;
 }
 
+/* HERO SECTION */
 /*Main campus image with overlay title */
 .hero {
     position: relative;
@@ -101,7 +103,7 @@
 }
 
 
-/* Dashboard Styles */
+/* DASHBOARD  */
 .dash-container {
     width: 90%;
     margin: 40px auto;
@@ -140,6 +142,7 @@
 }
 
 
+/* RESPONSIVE DESIGN */
 @media (max-width: 800px) {
     .dash-container {
         grid-template-columns: 1fr;
@@ -216,7 +219,7 @@
     }
 }
 
-/* Professor and Student Page Styles */
+/* USER PAGES*/
 .user-page body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;

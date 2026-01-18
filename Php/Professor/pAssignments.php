@@ -1,18 +1,13 @@
 <?php
-// Start session and check if user is logged in as professor
-session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role_id'] != 2) {
-    echo "<script>alert('Forbidden action! You do not have permission to access this page.'); window.location.href='../signIn.php';</script>";
-    exit();
-}
+include '../includes/auth.php';
+include '../includes/db.php';
+checkProfessorAccess();
 
 // Connect to database
-$conn = new mysqli("localhost","root","","metropolitan_db");
+$conn = getConnection();
 $prof = $_SESSION['username'];
 
-/* Get professor ID */
-$res = $conn->query("SELECT id FROM Users WHERE username='$prof'");
-$prof_id = $res->fetch_assoc()['id'];
+$prof_id = getUserId($prof);
 
 /* Handle new assignment creation */
 if(isset($_POST['title'])){
@@ -36,16 +31,19 @@ $assignments = $conn->query("
 ");
 ?>
 
+$pageTitle = "Post Assignments";
+$heading = "Post New Assignment";
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Post Assignments</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-
-<h2>Post New Assignment</h2>
+<h2><?php echo $heading; ?></h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Form to create new assignment -->
@@ -54,8 +52,8 @@ $assignments = $conn->query("
     <input type="date" name="due" required>
 
     <select name="course" required>
-        <?php while($c = $courses->fetch_assoc()): ?>
-            <option value="<?= $c['id'] ?>"><?= $c['title'] ?></option>
+        <?php while ($c = $courses->fetch_assoc()): ?>
+            <option value="<?php echo $c['id']; ?>"><?php echo $c['title']; ?></option>
         <?php endwhile; ?>
     </select>
 
@@ -69,12 +67,12 @@ $assignments = $conn->query("
 <table>
 <tr><th>Course</th><th>Title</th><th>Due Date</th></tr>
 
-<?php while($a = $assignments->fetch_assoc()): ?>
-<tr>
-    <td><?= $a['course'] ?></td>
-    <td><?= $a['title'] ?></td>
-    <td><?= $a['due_date'] ?></td>
-</tr>
+<?php while ($a = $assignments->fetch_assoc()): ?>
+    <tr>
+        <td><?php echo $a['course']; ?></td>
+        <td><?php echo $a['title']; ?></td>
+        <td><?php echo $a['due_date']; ?></td>
+    </tr>
 <?php endwhile; ?>
 
 </table>
@@ -96,13 +94,13 @@ $subs = $conn->query("
 <table>
 <tr><th>Course</th><th>Assignment</th><th>Student</th><th>File</th></tr>
 
-<?php while($s = $subs->fetch_assoc()): ?>
-<tr>
-    <td><?= $s['course'] ?></td>
-    <td><?= $s['assignment'] ?></td>
-    <td><?= $s['student'] ?></td>
-    <td><a href="../../SubmitedAssignments/<?= $s['file_name'] ?>" download>Download</a></td>
-</tr>
+<?php while ($s = $subs->fetch_assoc()): ?>
+    <tr>
+        <td><?php echo $s['course']; ?></td>
+        <td><?php echo $s['assignment']; ?></td>
+        <td><?php echo $s['student']; ?></td>
+        <td><a href="../../SubmitedAssignments/<?php echo $s['file_name']; ?>" download>Download</a></td>
+    </tr>
 <?php endwhile; ?>
 
 </table>
