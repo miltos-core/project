@@ -11,7 +11,7 @@ $student_id = getUserId($user);
 
 /* Fetch grades */
 $grades = $conn->query("
-    SELECT c.title AS course, a.title AS assignment, g.grade
+    SELECT c.title AS course, a.title AS assignment, g.grade, g.feedback
     FROM Submissions s
     JOIN Assignments a ON s.assignment_id = a.id
     JOIN Courses c ON a.course_id = c.id
@@ -40,6 +40,7 @@ $heading = "My Grades";
     <th>Course</th>
     <th>Assignment</th>
     <th>Grade</th>
+    <th>Feedback</th>
 </tr>
 
 <?php while ($g = $grades->fetch_assoc()): ?>
@@ -47,6 +48,7 @@ $heading = "My Grades";
         <td><?php echo $g['course']; ?></td>
         <td><?php echo $g['assignment']; ?></td>
         <td><?php echo $g['grade']; ?></td>
+        <td><?php echo $g['feedback']; ?></td>
     </tr>
 <?php endwhile; ?>
 
