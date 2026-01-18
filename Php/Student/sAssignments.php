@@ -12,11 +12,11 @@ $student_id = getUserId($student);
 /* Handle file upload */
 if(isset($_POST['upload'])){
     $assignment_id = $_POST['assignment_id'];
-    $file = $_FILES['file'];
-    $file_name = basename($file['name']);
+    $file_name = basename($_FILES['file']['name']);
     $target = "../../SubmitedAssignments/" . $file_name;
-    if(move_uploaded_file($file['tmp_name'], $target)){
+    if(move_uploaded_file($_FILES['file']['tmp_name'], $target)){
         $conn->query("INSERT INTO Submissions (assignment_id, student_id, file_name) VALUES ($assignment_id, $student_id, '$file_name')");
+        echo "Upload successful.";
     } else {
         echo "Upload failed.";
     }
@@ -42,6 +42,7 @@ $sql = "
 $result = $conn->query($sql);
 ?>
 
+<?php
 $pageTitle = "My Assignments";
 $heading = "My Assignments";
 ?>
@@ -49,12 +50,12 @@ $heading = "My Assignments";
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php echo $pageTitle; ?></title>
+    <title>My Assignments</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-<h2><?php echo $heading; ?></h2>
+<h2>My Assignments</h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Table displaying student's assignments with upload option -->
@@ -77,7 +78,7 @@ $heading = "My Assignments";
                 Submitted (<?php echo $row['file_name']; ?>)
             <?php else: ?>
                 <!-- Upload form for unsubmitted assignments -->
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <input type="hidden" name="assignment_id" value="<?php echo $row['id']; ?>">
                     <input type="file" name="file" required>
                     <button type="submit" name="upload">Upload</button>

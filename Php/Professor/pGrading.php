@@ -39,6 +39,7 @@ $subs = $conn->query("
 ");
 ?>
 
+<?php
 $pageTitle = "Grading";
 $heading = "Grade Students";
 ?>
@@ -46,12 +47,12 @@ $heading = "Grade Students";
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php echo $pageTitle; ?></title>
+    <title>Grading</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-<h2><?php echo $heading; ?></h2>
+<h2>Grade Students</h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Table for grading student submissions -->

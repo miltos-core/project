@@ -19,6 +19,7 @@ $courses = $conn->query("
 ");
 ?>
 
+<?php
 $pageTitle = "My Courses";
 $heading = "My Courses";
 ?>
@@ -26,12 +27,12 @@ $heading = "My Courses";
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php echo $pageTitle; ?></title>
+    <title>My Courses</title>
     <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-<h2><?php echo $heading; ?></h2>
+<h2>My Courses</h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Table displaying student's enrolled courses -->

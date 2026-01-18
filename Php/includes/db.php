@@ -8,7 +8,12 @@ function getConnection() {
 // Retrieves the user ID from the database based on the username.
 function getUserId($username) {
     $conn = getConnection();
-    $res = $conn->query("SELECT id FROM Users WHERE username='$username'");
-    return $res->fetch_assoc()['id'];
+    $stmt = $conn->prepare("SELECT id FROM Users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+    return $row ? $row['id'] : null;
 }
 ?>

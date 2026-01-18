@@ -39,19 +39,15 @@ $courses = $conn->query("SELECT * FROM Courses WHERE professor_id = $prof_id");
 $students = $conn->query("SELECT id, username FROM Users WHERE role_id=1");
 ?>
 
-$pageTitle = "Manage Courses";
-$heading = "Manage Courses";
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
-<title><?php echo $pageTitle; ?></title>
+<title>Manage Courses</title>
 <link rel="stylesheet" href="../../CSS/stylesMain.css">
 </head>
 <body class="user-page">
 <div class="container">
-<h2><?php echo $heading; ?></h2>
+<h2>Manage Courses</h2>
 <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
 <!-- Form to create new course -->

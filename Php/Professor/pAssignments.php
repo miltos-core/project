@@ -31,6 +31,7 @@ $assignments = $conn->query("
 ");
 ?>
 
+<?php
 $pageTitle = "Post Assignments";
 $heading = "Post New Assignment";
 ?>
