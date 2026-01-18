@@ -16,9 +16,9 @@ if(isset($_POST['upload'])){
     $target = "../../SubmitedAssignments/" . $file_name;
     if(move_uploaded_file($_FILES['file']['tmp_name'], $target)){
         $conn->query("INSERT INTO Submissions (assignment_id, student_id, file_name) VALUES ($assignment_id, $student_id, '$file_name')");
-        echo "Upload successful.";
+        echo "<script>alert('Upload successful.');</script>";
     } else {
-        echo "Upload failed.";
+        echo "<script>alert('Upload failed.');</script>";
     }
 }
 
