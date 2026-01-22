@@ -49,47 +49,48 @@ $heading = "My Assignments";
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>My Assignments</title>
-    <link rel="stylesheet" href="../../CSS/stylesMain.css">
-</head>
-<body class="user-page">
-<div class="container">
-<h2>My Assignments</h2>
-<a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
+    <head>
+        <title>My Assignments</title>
+        <link rel="stylesheet" href="../../CSS/stylesMain.css">
+    </head>
+    
+    <body class="user-page">
+    <div class="container">
+    <h2>My Assignments</h2>
+    <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
-<!-- Table displaying student's assignments with upload option -->
-<table>
-<tr>
-    <th>Course</th>
-    <th>Assignment</th>
-    <th>Due Date</th>
-    <th>Status</th>
-</tr>
-
-
-<?php while ($row = $result->fetch_assoc()): ?>
+    <!-- Table displaying student's assignments with upload option -->
+    <table>
     <tr>
-        <td><?php echo $row['course']; ?></td>
-        <td><?php echo $row['title']; ?></td>
-        <td><?php echo $row['due_date']; ?></td>
-        <td>
-            <?php if ($row['file_name']): ?>
-                Submitted (<?php echo $row['file_name']; ?>)
-            <?php else: ?>
-                <!-- Upload form for unsubmitted assignments -->
-                <form method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="assignment_id" value="<?php echo $row['id']; ?>">
-                    <input type="file" name="file" required>
-                    <button type="submit" name="upload">Upload</button>
-                </form>
-            <?php endif; ?>
-        </td>
+        <th>Course</th>
+        <th>Assignment</th>
+        <th>Due Date</th>
+        <th>Status</th>
     </tr>
-<?php endwhile; ?>
 
-</table>
 
-</div>
-</body>
+    <?php while ($row = $result->fetch_assoc()): ?>
+        <tr>
+            <td><?php echo $row['course']; ?></td>
+            <td><?php echo $row['title']; ?></td>
+            <td><?php echo $row['due_date']; ?></td>
+            <td>
+                <?php if ($row['file_name']): ?>
+                    Submitted (<?php echo $row['file_name']; ?>)
+                <?php else: ?>
+                    <!-- Upload form for unsubmitted assignments -->
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="assignment_id" value="<?php echo $row['id']; ?>">
+                        <input type="file" name="file" required>
+                        <button type="submit" name="upload">Upload</button>
+                    </form>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endwhile; ?>
+
+    </table>
+
+    </div>
+    </body>
 </html>

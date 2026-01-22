@@ -7,4 +7,4 @@ L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=PPsH78
 var photoImg = '<img src="Images/campus-overview.jpg" height="120" width="200"/>';
 
 L.marker([36.44998015440768, 28.222938979802368]).addTo(map)
-    .bindPopup('<strong>Μητροπολιτικό Κολλέγιο Ρόδου</strong><br><br>' + photoImg);
+    .bindPopup('<strong>Μητροπoλιτικό Κολλέγιο Ρόδου</strong><br><br>' + photoImg);

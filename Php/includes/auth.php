@@ -12,7 +12,7 @@ function checkStudentAccess() {
 }
 
 // Checks if the user is logged in as a professor (role_id = 2).
-// Starts the session and redirects to sign-in if not authorized.
+// Starts the session and redirects to sign-in if not authorized. 
 
 function checkProfessorAccess() {
     session_start();

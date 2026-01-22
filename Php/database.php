@@ -125,15 +125,15 @@ $conn->close();
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>System Setup</title>
-    <link rel="stylesheet" href="../CSS/styles2.css">
-</head>
-<body>
-<div class="formDiv" style="text-align:center;">
-    <h2>Setup Completed</h2>
-    <p><?php echo $msg; ?></p>
-    <a class="btn btn-submit" href="http://localhost/prototype/index.php">Go to Website</a>
-</div>
-</body>
+    <head>
+        <title>System Setup</title>
+        <link rel="stylesheet" href="../CSS/styles2.css">
+    </head>
+    <body>
+    <div class="formDiv" style="text-align:center;">
+        <h2>Setup Completed</h2>
+        <p><?php echo $msg; ?></p>
+        <a class="btn btn-submit" href="http://localhost/prototype/index.php">Go to Website</a>
+    </div>
+    </body>
 </html>

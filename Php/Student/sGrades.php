@@ -25,35 +25,36 @@ $heading = "My Grades";
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title><?php echo $pageTitle; ?></title>
-    <link rel="stylesheet" href="../../CSS/stylesMain.css">
-</head>
-<body class="user-page">
-<div class="container">
-<h2><?php echo $heading; ?></h2>
-<a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
+    <head>
+        <title><?php echo $pageTitle; ?></title>
+        <link rel="stylesheet" href="../../CSS/stylesMain.css">
+    </head>
+    
+    <body class="user-page">
+    <div class="container">
+    <h2><?php echo $heading; ?></h2>
+    <a href="../../dashboard.php" class="back-button">Back to Dashboard</a>
 
-<!-- Table displaying student's grades -->
-<table border="1">
-<tr>
-    <th>Course</th>
-    <th>Assignment</th>
-    <th>Grade</th>
-    <th>Feedback</th>
-</tr>
-
-<?php while ($g = $grades->fetch_assoc()): ?>
+    <!-- Table displaying student's grades -->
+    <table border="1">
     <tr>
-        <td><?php echo $g['course']; ?></td>
-        <td><?php echo $g['assignment']; ?></td>
-        <td><?php echo $g['grade']; ?></td>
-        <td><?php echo $g['feedback']; ?></td>
+        <th>Course</th>
+        <th>Assignment</th>
+        <th>Grade</th>
+        <th>Feedback</th>
     </tr>
-<?php endwhile; ?>
 
-</table>
+    <?php while ($g = $grades->fetch_assoc()): ?>
+        <tr>
+            <td><?php echo $g['course']; ?></td>
+            <td><?php echo $g['assignment']; ?></td>
+            <td><?php echo $g['grade']; ?></td>
+            <td><?php echo $g['feedback']; ?></td>
+        </tr>
+    <?php endwhile; ?>
 
-</div>
-</body>
+    </table>
+
+    </div>
+    </body>
 </html>

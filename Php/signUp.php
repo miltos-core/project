@@ -63,59 +63,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="el">
-<head>
-    <!-- Ensures proper layout scaling on mobile devices -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta charset="UTF-8">
-    <title>Μητροπολιτικό Κολλέγιο Ρόδου - Sign Up</title>
-    <link rel="stylesheet" href="../CSS/styles2.css">
-</head>
-<body>
+    <head>
+        <!-- Ensures proper layout scaling on mobile devices -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta charset="UTF-8">
+        <title>Μητροπολιτικό Κολλέγιο Ρόδου - Sign Up</title>
+        <link rel="stylesheet" href="../CSS/styles2.css">
+    </head>
+    <body>
 
-    <div class="nav">
-        <a href="../index.php"><img src="../Images/Icon.png" id="icon" alt="Logo"></a>
-        <div class="nav-right">
-            <a href="signIn.php">Sign In</a>
+        <div class="nav">
+            <a href="../index.php"><img src="../Images/Icon.png" id="icon" alt="Logo"></a>
+            <div class="nav-right">
+                <a href="signIn.php">Sign In</a>
+            </div>
         </div>
-    </div>
 
-    <div class="formDiv">
-        <form action="signUp.php" method="post">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" class="form-input" name="username" required>
-            </div>
+        <div class="formDiv">
+            <form action="signUp.php" method="post">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" class="form-input" name="username" required>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" class="form-input" name="email" required>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" class="form-input" name="email" required>
+                </div>
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" class="form-input" name="password" required>
-            </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" class="form-input" name="password" required>
+                </div>
 
-            <div class="form-group">
-                <label for="code">Registration Code:</label>
-                <input type="text" name="code" id="code" class="form-input" required placeholder="PROF2025 or STUD2025">
-            </div>
+                <div class="form-group">
+                    <label for="code">Registration Code:</label>
+                    <input type="text" name="code" id="code" class="form-input" required placeholder="PROF2025 or STUD2025">
+                </div>
 
-            <div class="form-group">
-                <label>User Type:</label>
-                <input type="radio" class="form-radio" id="professor" name="type" value="professor" required>
-                <label for="professor">Professor</label>
-                <input type="radio" class="form-radio" id="student" name="type" value="student" required>
-                <label for="student">Student</label>
-            </div>
+                <div class="form-group">
+                    <label>User Type:</label>
+                    <input type="radio" class="form-radio" id="professor" name="type" value="professor" required>
+                    <label for="professor">Professor</label>
+                    <input type="radio" class="form-radio" id="student" name="type" value="student" required>
+                    <label for="student">Student</label>
+                </div>
 
-            <div class="form-buttons">
-                <input type="submit" class="btn btn-submit" value="Sign Up">
-                <input type="reset" class="btn btn-reset" value="Reset">
-            </div>
-        </form>
-    </div>
+                <div class="form-buttons">
+                    <input type="submit" class="btn btn-submit" value="Sign Up">
+                    <input type="reset" class="btn btn-reset" value="Reset">
+                </div>
+            </form>
+        </div>
 
-</body>
+    </body>
 </html>
